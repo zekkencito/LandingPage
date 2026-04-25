@@ -373,6 +373,37 @@
             }
         }
     </style>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const pdfLinks = document.querySelectorAll('a[href*=".pdf"]');
+            pdfLinks.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    if (this.hasAttribute('download')) {
+                        e.preventDefault();
+                        const href = this.href;
+                        const filename = this.getAttribute('download');
+                        
+                        fetch(href)
+                            .then(response => response.blob())
+                            .then(blob => {
+                                const url = window.URL.createObjectURL(blob);
+                                const a = document.createElement('a');
+                                a.href = url;
+                                a.download = filename;
+                                document.body.appendChild(a);
+                                a.click();
+                                document.body.removeChild(a);
+                                window.URL.revokeObjectURL(url);
+                            })
+                            .catch(err => {
+                                console.error('Error descargando PDF:', err);
+                                alert('Error al descargar el archivo. Por favor intenta de nuevo.');
+                            });
+                    }
+                });
+            });
+        });
+    </script>
 </head>
 <body>
     <div class="container">
