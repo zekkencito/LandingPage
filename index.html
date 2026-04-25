@@ -373,37 +373,6 @@
             }
         }
     </style>
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const pdfLinks = document.querySelectorAll('a[href*=".pdf"]');
-            pdfLinks.forEach(link => {
-                link.addEventListener('click', function(e) {
-                    if (this.hasAttribute('download')) {
-                        e.preventDefault();
-                        const href = this.href;
-                        const filename = this.getAttribute('download');
-                        
-                        fetch(href)
-                            .then(response => response.blob())
-                            .then(blob => {
-                                const url = window.URL.createObjectURL(blob);
-                                const a = document.createElement('a');
-                                a.href = url;
-                                a.download = filename;
-                                document.body.appendChild(a);
-                                a.click();
-                                document.body.removeChild(a);
-                                window.URL.revokeObjectURL(url);
-                            })
-                            .catch(err => {
-                                console.error('Error descargando PDF:', err);
-                                alert('Error al descargar el archivo. Por favor intenta de nuevo.');
-                            });
-                    }
-                });
-            });
-        });
-    </script>
 </head>
 <body>
     <div class="container">
@@ -415,11 +384,11 @@
         </header>
 
         <section class="buttons-container">
-            <a href="cv-Renzo-Caycho-espanol.pdf" class="btn btn-cv" download="cv-Renzo-Caycho-espanol.pdf">
+            <a href="cv-RenzoCaycho-espanol.pdf" class="btn btn-cv" target="_blank">
                 <i class="fas fa-file-pdf"></i>
                 <span class="btn-text">Descargar CV (Español)</span>
             </a>
-            <a href="cv-Renzo-Caycho-english.pdf" class="btn btn-cv" download="cv-Renzo-Caycho-english.pdf">
+            <a href="cv-RenzoCaycho-english.pdf" class="btn btn-cv" target="_blank">
                 <i class="fas fa-file-pdf"></i>
                 <span class="btn-text">Download CV (English)</span>
             </a>
